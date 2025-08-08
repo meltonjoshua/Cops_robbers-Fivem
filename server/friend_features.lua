@@ -1,5 +1,4 @@
 -- Server-side Friend Features
-local QBCore = exports['qb-core']:GetCoreObject() or {}
 
 -- Game state for friends
 local friendGame = {
@@ -29,8 +28,8 @@ AddEventHandler('cr:requestTeamSwitch', function()
     local src = source
     local players = GetPlayers()
     
-    if #players < 2 then
-        TriggerClientEvent('QBCore:Notify', src, 'Need at least 2 players for team switch!', 'error')
+    if playerCount < 2 then
+        TriggerClientEvent('cr:notify', src, 'Need at least 2 players for team switch!')
         return
     end
     
@@ -39,7 +38,7 @@ AddEventHandler('cr:requestTeamSwitch', function()
     local newTeam = teams[math.random(#teams)]
     
     TriggerClientEvent('cr:teamSwitched', src, newTeam)
-    TriggerClientEvent('QBCore:Notify', -1, GetPlayerName(src) .. ' switched to ' .. newTeam .. ' team!', 'info')
+    TriggerClientEvent('cr:notify', -1, GetPlayerName(src) .. ' switched to ' .. newTeam .. ' team!')
 end)
 
 -- Handle taunts
@@ -94,7 +93,7 @@ AddEventHandler('cr:arrestPlayer', function(targetId)
     -- Release after 30 seconds for friends (shorter jail time)
     SetTimeout(30000, function()
         TriggerClientEvent('cr:releaseFromJail', targetId)
-        TriggerClientEvent('QBCore:Notify', targetId, 'You have been released from jail!', 'success')
+        TriggerClientEvent('cr:notify', targetId, 'You have been released from jail!')
     end)
 end)
 
@@ -114,7 +113,7 @@ AddEventHandler('cr:startQuickGame', function(mode)
     local players = GetPlayers()
     
     if #players < 2 then
-        TriggerClientEvent('QBCore:Notify', src, 'Need at least 2 players to start!', 'error')
+        TriggerClientEvent('cr:notify', src, 'Need at least 2 players to start!')
         return
     end
     
@@ -149,7 +148,7 @@ AddEventHandler('cr:startQuickGame', function(mode)
     -- Shorter game duration for friends (5 minutes)
     local gameDuration = 300000 -- 5 minutes
     
-    TriggerClientEvent('QBCore:Notify', -1, 'Quick ' .. friendGame.mode .. ' game started! Duration: 5 minutes', 'success')
+    TriggerClientEvent('cr:notify', -1, 'Quick ' .. friendGame.mode .. ' game started! Duration: 5 minutes')
     TriggerClientEvent('cr:startChaseMode', -1)
     
     -- Start the actual game via the main system
@@ -218,7 +217,7 @@ AddEventHandler('cr:voteRestart', function()
     local players = GetPlayers()
     
     if friendGame.restartVotes[src] then
-        TriggerClientEvent('QBCore:Notify', src, 'You already voted to restart!', 'error')
+        TriggerClientEvent('cr:notify', src, 'You already voted to restart!')
         return
     end
     
@@ -238,7 +237,7 @@ AddEventHandler('cr:voteRestart', function()
     })
     
     if voteCount >= requiredVotes then
-        TriggerClientEvent('QBCore:Notify', -1, 'Restart vote passed! Restarting game...', 'success')
+        TriggerClientEvent('cr:notify', -1, 'Restart vote passed! Restarting game...')
         
         -- Reset everything
         friendGame.restartVotes = {}
@@ -268,7 +267,7 @@ end, true)
 RegisterCommand('clearscores', function(source, args)
     if source == 0 or IsPlayerAceAllowed(source, 'admin') then
         friendGame.scores = {}
-        TriggerClientEvent('QBCore:Notify', -1, 'All scores cleared!', 'info')
+        TriggerClientEvent('cr:notify', -1, 'All scores cleared!')
     end
 end, true)
 
