@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cops and Robbers</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="gameUI" class="game-ui hidden">
+        <div class="header">
+            <div class="game-title">COPS & ROBBERS</div>
+            <div class="team-indicator" id="teamIndicator">
+                <span id="teamText">LOADING...</span>
+            </div>
+        </div>
+        
+        <div class="timer-container">
+            <div class="timer-label">TIME REMAINING</div>
+            <div class="timer" id="gameTimer">10:00</div>
+        </div>
+        
+        <div class="info-panel">
+            <div class="objective" id="objective">
+                <div class="objective-title">OBJECTIVE</div>
+                <div class="objective-text" id="objectiveText">Loading...</div>
+            </div>
+            
+            <div class="controls">
+                <div class="control-item">
+                    <span class="key">E</span>
+                    <span class="action" id="eAction">Arrest Robber</span>
+                </div>
+                <div class="control-item">
+                    <span class="key">F</span>
+                    <span class="action">Enter Vehicle</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="status-bar">
+            <div class="status-item">
+                <span class="status-label">Players Online:</span>
+                <span class="status-value" id="playersOnline">0</span>
+            </div>
+            <div class="status-item">
+                <span class="status-label">Game Status:</span>
+                <span class="status-value" id="gameStatus">Waiting</span>
+            </div>
+        </div>
+    </div>
+    
+    <div id="notifications" class="notifications"></div>
+    
+    <script src="script.js"></script>
+</body>
+</html>

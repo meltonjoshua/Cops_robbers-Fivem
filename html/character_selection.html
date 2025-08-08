@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Character Selection</title>
+    <link rel="stylesheet" href="character_selection.css">
+</head>
+<body>
+    <div id="characterSelection" class="character-selection-overlay hidden">
+        <div class="selection-container">
+            <div class="selection-header">
+                <h1>Choose Your Character</h1>
+                <p>Select your character and team preference for the upcoming match</p>
+            </div>
+            
+            <div class="team-selection">
+                <h2>Team Preference</h2>
+                <div class="team-buttons">
+                    <button id="copTeamBtn" class="team-btn cop-btn" data-team="cop">
+                        <div class="team-icon">👮</div>
+                        <div class="team-name">Police</div>
+                        <div class="team-desc">Arrest all robbers</div>
+                    </button>
+                    <button id="robberTeamBtn" class="team-btn robber-btn" data-team="robber">
+                        <div class="team-icon">🏃</div>
+                        <div class="team-name">Robber</div>
+                        <div class="team-desc">Escape for 10 minutes</div>
+                    </button>
+                    <button id="randomTeamBtn" class="team-btn random-btn" data-team="random">
+                        <div class="team-icon">🎲</div>
+                        <div class="team-name">Random</div>
+                        <div class="team-desc">Let fate decide</div>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="character-grid-container">
+                <h2 id="characterGridTitle">Select Team First</h2>
+                <div id="characterGrid" class="character-grid">
+                    <!-- Characters will be populated by JavaScript -->
+                </div>
+            </div>
+            
+            <div class="selection-footer">
+                <div class="selected-info">
+                    <div class="selected-character">
+                        <strong>Character:</strong> <span id="selectedCharacterName">None selected</span>
+                    </div>
+                    <div class="selected-team">
+                        <strong>Team:</strong> <span id="selectedTeamName">None selected</span>
+                    </div>
+                </div>
+                <div class="action-buttons">
+                    <button id="confirmBtn" class="confirm-btn" disabled>Confirm Selection</button>
+                    <button id="cancelBtn" class="cancel-btn">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="character_selection.js"></script>
+</body>
+</html>
