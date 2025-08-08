@@ -1,221 +1,273 @@
-# Cops & Robbers FiveM Script
+# Cops & Robbers FiveM Script - Enhanced Edition v2.0
 
-A comprehensive cops and robbers game mode for FiveM featuring:
-- 10-minute chase scenarios
-- Advanced arrest system with progress bars
-- Real-time blip system for tracking players
-- Team-based gameplay with automatic balancing
-- Custom UI with timer and objective display
-- Spawn system with vehicles for both teams
+## 🚓 Overview
+A comprehensive cops and robbers game mode for FiveM featuring multiple game modes, progression system, environmental interactions, advanced arrest mechanics, **immersive audio system**, **realistic vehicle mechanics**, **dynamic map features**, and **spectator mode**.
 
-## Features
+## ✨ Key Features
 
-### Core Gameplay
-- **10-minute timer**: Robbers must survive for 10 minutes to win
-- **Character Selection**: Players choose their character model and team preference before the game starts
-- **Team balancing**: Smart assignment system that considers player preferences while maintaining balance
-- **Win conditions**: Cops win by arresting all robbers, robbers win by surviving the timer
-- **Vehicle spawning**: Each team gets appropriate vehicles (police cars vs supercars)
+### 🎮 Multiple Game Modes
+- **Classic Mode**: Traditional 10-minute survival gameplay
+- **Bank Heist**: Rob banks to collect target money and escape
+- **VIP Escort**: Protect or eliminate a VIP during transport
+- **Territory Control**: Capture and hold zones to win
+- **Survival Mode**: Face waves of increasing difficulty
 
-### Character Selection System
-- **Pre-game selection**: 30-second character selection phase before each match
-- **Team preferences**: Players can choose to be cops, robbers, or random assignment
-- **Character models**: Multiple character options for each team with unique appearances
-- **Smart balancing**: System respects preferences while maintaining team balance
-- **Auto-assignment**: Players who don't select in time get randomly assigned
+### 🎵 **NEW: Immersive Audio System**
+- **Dynamic Music**: Chase intensity-based soundtrack
+- **Police Radio Chatter**: Realistic radio communications
+- **Positional Sound Effects**: 3D audio experience
+- **Contextual Ambient Audio**: Different soundscapes per game mode
+- **Volume Controls**: Separate sliders for music, effects, and radio
 
-### Arrest System
-- **Proximity-based arrests**: Cops must get within 3 meters of robbers
-- **Progress bar**: 5-second arrest animation with visual feedback
-- **Escape mechanics**: Robbers can break free if they move away during arrest
-- **Prison system**: Arrested robbers are teleported to prison
+### 🚗 **NEW: Advanced Vehicle System**
+- **Fuel Consumption**: Realistic fuel usage based on driving style
+- **Damage Modeling**: Progressive vehicle damage affecting performance
+- **Modification System**: Upgrade speed, handling, and armor
+- **Gas Station Refueling**: Interactive fuel stations with costs
+- **Distance Tracking**: Comprehensive driving statistics
 
-### Blip System
-- **Team visibility**: Players can see enemy team members on the map
-- **Real-time updates**: Blips update every second with player positions
-- **Color coding**: Blue blips for cops, red blips for robbers
-- **Auto cleanup**: Blips are automatically removed when players disconnect
+### 🗺️ **NEW: Dynamic Map Features**
+- **Police Roadblocks**: Spawnable roadblocks with AI officers
+- **Weather System**: Dynamic weather affecting visibility and handling
+- **Traffic Control**: Random accidents, construction, and parades
+- **Event Zones**: Live protests and public events
+- **Time Management**: Accelerated or fixed time controls
 
-### User Interface
-- **Modern design**: Sleek, cyberpunk-inspired UI
-- **Team indicators**: Clear visual indication of player team
-- **Timer display**: Countdown timer with color-coded warnings
-- **Objective text**: Dynamic objectives based on team assignment
-- **Control hints**: On-screen controls and key bindings
-- **Keybind system**: Customizable hotkeys for all main commands
-- **Help overlay**: Press F5 for comprehensive help and controls
+### 👁️ **NEW: Spectator Mode**
+- **Multiple Camera Modes**: Free camera, player following, fixed viewpoints
+- **Player Switching**: Navigate between active players with hotkeys
+- **Interactive UI**: Comprehensive spectator interface
+- **Auto-Entry**: Automatic spectator mode when eliminated
 
-## Installation
+### 📊 Progression System
+- **Player Levels**: Gain XP and level up (1-50)
+- **Achievements**: 14+ unlockable achievements with rewards
+- **Statistics Tracking**: Comprehensive stats for all activities
+- **Session Summaries**: Post-game performance reviews
 
-1. Download or clone this repository
-2. Place the `Cops_robbers-Fivem` folder in your FiveM server's `resources` directory
-3. Add the following line to your `server.cfg`:
-   ```
-   start Cops_robbers-Fivem
-   ```
-4. Restart your server
+### 🔧 Advanced Mechanics
+- **Enhanced Arrest System**: Resistance mechanics and minigames
+- **Environmental Interactions**: Hackable terminals, breachable doors, lootable containers
+- **Evidence Collection**: Advanced investigation mechanics
+- **Team Arrest Bonuses**: Cooperative gameplay rewards
 
-## Usage
+### 🎨 Rich User Interface
+- **Character Selection**: Pre-game team and character choice
+- **Statistics Dashboard**: Detailed performance metrics
+- **Hacking Minigames**: Interactive terminal access
+- **Achievement Notifications**: Real-time unlock alerts
+- **Help System**: Comprehensive keybind guide
 
-### Starting a Game
-- **Keybind**: Press `F7` to start a new game
-- **In-game command**: `/startcopsrobbers` or `/startcr`
-- **Console command**: `startcr` (from server console)
-- **Requirements**: Minimum 4 players to start a game
+### ⌨️ Intuitive Controls
+- **F5**: Toggle help menu
+- **F6**: Toggle UI elements  
+- **F7**: Start game
+- **F8**: End game
+- **F9**: Game information
+- **F10**: Player statistics
+- **F11**: Change game mode
+- **E**: Interact/Arrest
+- **Arrow Keys**: Hacking controls
 
-### Admin Commands
-- **Keybind**: Press `F8` to end the current game (admin only)
-- `/endcr` - End the current game (admin only)
-- `crgameinfo` - Display game information in console (admin/console only)
+## 🏗️ Installation
 
-### Help and Information
-- **Keybind**: Press `F5` to show help overlay with all controls
-- **Keybind**: Press `F6` to toggle the game UI
-- **Keybind**: Press `F9` to show current game status
-- `/crhelp` - Show help in chat
+1. Download the script to your FiveM resources folder
+2. Add `ensure Cops_robbers-Fivem` to your server.cfg
+3. Restart your server
+4. Press F7 when you have 4+ players to start!
 
-### Gameplay
-1. Use `/startcopsrobbers` to begin a new game
-2. **Character Selection Phase**: Players have 30 seconds to choose their character and team preference
-3. **Team Assignment**: System assigns teams based on preferences while maintaining balance
-4. Cops spawn at police stations with police vehicles and weapons
-5. Robbers spawn at various locations with fast escape vehicles
-6. Cops must arrest all robbers within 10 minutes
-7. Robbers must survive and avoid arrest for 10 minutes
-
-### Controls
-- **Main Keybinds**:
-  - **F5** - Show help overlay
-  - **F6** - Toggle game UI
-  - **F7** - Start new game
-  - **F8** - End game (admin only)
-  - **F9** - Show game info/status
-- **During Character Selection**:
-  - **Mouse** - Select character and team
-  - **Enter** - Confirm selection
-  - **Escape** - Cancel/Random assignment
-- **During Gameplay**:
-  - **E** - Arrest robber (when playing as cop and near a robber)
-  - **F** - Enter/exit vehicle
-  - **Standard GTA controls** for movement and driving
-
-## Configuration
-
-Edit `config.lua` to customize:
-
-### Game Settings
-```lua
-Config.GameDuration = 600        -- Game length in seconds (10 minutes)
-Config.MinPlayers = 4           -- Minimum players required
-Config.MaxRobbers = 8           -- Maximum number of robbers
-Config.ArrestDistance = 3.0     -- Distance required for arrest
-Config.ArrestTime = 5000        -- Time to complete arrest (ms)
-Config.CharacterSelectionTime = 30 -- Character selection time (seconds)
-```
-
-### Spawn Locations
-- `Config.CopSpawns` - Police spawn points
-- `Config.RobberSpawns` - Robber spawn points
-
-### Vehicles
-- `Config.CopVehicles` - Police vehicle models
-- `Config.RobberVehicles` - Robber vehicle models
-
-### Character Models
-- `Config.CharacterModels.cops` - Available police character models
-- `Config.CharacterModels.robbers` - Available criminal character models
-
-### Keybind Settings
-- `Config.Keybinds.startGame` - Start game keybind (default: F7)
-- `Config.Keybinds.endGame` - End game keybind (default: F8) 
-- `Config.Keybinds.gameInfo` - Game info keybind (default: F9)
-- `Config.Keybinds.toggleUI` - Toggle UI keybind (default: F6)
-- `Config.Keybinds.help` - Help overlay keybind (default: F5)
-- `Config.Keybinds.arrest` - Arrest action key (default: E)
-- `Config.Keybinds.enterVehicle` - Vehicle entry key (default: F)
-
-### Blip Settings
-- Colors, sprites, and scales for map blips
-
-## File Structure
+## 📁 File Structure
 
 ```
 Cops_robbers-Fivem/
-├── fxmanifest.lua          # Resource manifest
-├── config.lua              # Configuration file
-├── server/
-│   ├── main.lua           # Core server logic
-│   ├── game.lua           # Game event handlers
-│   └── version.lua        # Version and debug system
-├── client/
-│   ├── main.lua           # Main client script
-│   ├── blips.lua          # Blip system
-│   ├── arrest.lua         # Arrest mechanics
-│   └── character_selection.lua # Character selection system
-├── html/
-│   ├── ui.html            # Main game UI
-│   ├── style.css          # Main UI styling
-│   ├── script.js          # Main UI functionality
-│   ├── character_selection.html # Character selection UI
-│   ├── character_selection.css  # Character selection styling
-│   └── character_selection.js   # Character selection functionality
-├── install.sh             # Installation script
-├── test.sh               # Testing script
-└── README.md              # This file
+├── fxmanifest.lua              # Resource manifest
+├── config.lua                  # Game configuration
+├── README.md                   # This file
+├── client/                     # Client-side scripts
+│   ├── main.lua               # Core client logic
+│   ├── blips.lua              # Map blip system
+│   ├── arrest.lua             # Basic arrest mechanics
+│   ├── enhanced_arrest.lua    # Advanced arrest system
+│   ├── character_selection.lua # Pre-game selection
+│   ├── keybinds.lua           # Basic keybind system
+│   ├── keybinds_enhanced.lua  # Enhanced controls
+│   ├── game_modes.lua         # Multiple game modes
+│   ├── statistics.lua         # Progression system
+│   └── environment.lua        # Interactive objects
+├── server/                     # Server-side scripts
+│   ├── main.lua               # Core server logic
+│   ├── game.lua               # Game event handling
+│   └── version.lua            # Version checking
+└── html/                       # User interface
+    ├── ui.html                # Main UI
+    ├── style.css              # Basic styles
+    ├── script.js              # UI interactions
+    ├── character_selection.*   # Selection interface
+    ├── enhanced_ui.html       # Advanced UI components
+    ├── enhanced_styles.css    # Advanced styling
+    └── enhanced_script.js     # Enhanced interactions
 ```
 
-## Dependencies
+## ⚙️ Configuration
 
-- FiveM server
-- No additional dependencies required
+### Game Settings (config.lua)
+```lua
+Config.GameDuration = 600000    -- 10 minutes
+Config.MinPlayers = 4           -- Minimum players to start
+Config.MaxPlayers = 32          -- Maximum players
+Config.ArrestDistance = 3.0     -- Arrest range
+Config.ArrestTime = 5000        -- Arrest duration
+```
 
-## Compatibility
+### Spawn Locations
+- **Cop Spawns**: Police stations and secure areas
+- **Robber Spawns**: Various civilian locations
+- **Vehicle Spawns**: Team-appropriate vehicles
 
-- Tested with FiveM artifacts 6683+
-- Compatible with ESX, QBCore, and standalone servers
-- Works with most other resources
+### Character Models
+- **Police**: Various law enforcement models
+- **Criminals**: Civilian character options
+- **Customization**: Player preference system
 
-## Troubleshooting
+## 🎯 Game Modes Explained
+
+### Classic Mode
+- Robbers survive for 10 minutes
+- Cops arrest all robbers to win
+- Traditional chase gameplay
+
+### Bank Heist Mode
+- Rob banks to collect target money
+- Each bank has different values
+- Escape with the money to win
+
+### VIP Escort Mode
+- One player becomes the VIP
+- Cops must escort them safely
+- Robbers try to eliminate the VIP
+
+### Territory Control Mode
+- Capture zones by standing in them
+- Hold majority of territories to win
+- Dynamic territory control mechanics
+
+### Survival Mode
+- Face waves of increasing difficulty
+- Each wave brings more challenges
+- Survive as long as possible
+
+## 📈 Progression System
+
+### Experience Points (XP)
+- **Game Victory**: 100 XP
+- **Participation**: 25 XP
+- **Arrests**: 25 XP each
+- **Money Stolen**: 1 XP per $1000
+- **Survival Time**: 5 XP per minute
+
+### Achievements
+- **First Timer**: Play your first game (100 XP)
+- **Arrest Master**: Make 50 arrests (500 XP)
+- **Money Bags**: Steal $1,000,000 (1000 XP)
+- **Legendary**: Reach level 25 (5000 XP)
+- *...and many more!*
+
+### Statistics Tracked
+- Games played/won/lost
+- Arrests made/received
+- Money stolen
+- Kill/death ratios
+- Time survived
+- Bank robberies
+- Territories captured
+
+## 🔧 Advanced Features
+
+### Environmental Interactions
+- **Hackable Terminals**: Access security systems
+- **Breachable Doors**: Force entry to buildings
+- **Security Cameras**: Surveillance system
+- **Loot Containers**: Hidden money stashes
+
+### Enhanced Arrest System
+- **Resistance Mechanics**: Robbers can fight back
+- **Evidence Collection**: Investigation gameplay
+- **Team Arrests**: Bonus for cooperation
+- **Handcuffing Sequences**: Realistic animations
+
+### Interactive Hacking
+- **Pattern Matching**: Follow arrow sequences
+- **Difficulty Levels**: Increasing complexity
+- **System Effects**: Disable cameras, open doors
+- **Risk/Reward**: Alert cops on failure
+
+## 🎮 Commands
+
+### Chat Commands
+- `/surrender` - Give up to nearby cops
+- `/teamchat [message]` - Team communication
+- `/gameinfo` - Show current status
+- `/rules` - Display game rules
+- `/reset_stats` - Reset statistics (admin)
+
+### Key Bindings
+All major functions accessible via F-keys for quick access during gameplay.
+
+## 🔧 Customization
+
+### Adding New Game Modes
+1. Define mode in `client/game_modes.lua`
+2. Add initialization function
+3. Implement win conditions
+4. Update UI elements
+
+### Modifying Spawn Points
+Edit the spawn arrays in `config.lua` with new coordinates:
+```lua
+Config.CopSpawns = {
+    {x = 425.1, y = -979.5, z = 30.7, h = 90.0}
+}
+```
+
+### Custom Achievements
+Add new achievements to the achievements table in `client/statistics.lua`:
+```lua
+{id = "custom_achievement", name = "Custom", description = "Custom achievement", unlocked = false, xp = 100}
+```
+
+## 🐛 Troubleshooting
 
 ### Common Issues
+1. **Game won't start**: Check minimum player count
+2. **No blips showing**: Restart the resource
+3. **UI not loading**: Check browser console
+4. **Statistics not saving**: Verify KVP permissions
 
-1. **Game won't start**
-   - Check minimum player requirement (default: 4 players)
-   - Verify resource is started in server.cfg
-   - Check server console for errors
+### Debug Mode
+Enable debug mode in config.lua for additional logging:
+```lua
+Config.Debug = true
+```
 
-2. **Blips not showing**
-   - Ensure players are on different teams
-   - Check if game is active
-   - Verify no conflicting blip resources
+## 🤝 Contributing
 
-3. **Arrest system not working**
-   - Check distance between players (must be within 3 meters)
-   - Ensure both players are in the game
-   - Verify cop is targeting a robber
+Feel free to:
+- Report bugs via issues
+- Suggest new features
+- Submit pull requests
+- Share configuration improvements
 
-4. **UI not displaying**
-   - Check browser console for JavaScript errors
-   - Verify NUI is enabled on client
-   - Restart resource if needed
+## 📝 License
 
-### Performance Tips
+This script is open source and available for modification. Credit to original creators appreciated.
 
-- Adjust blip update frequency in `client/blips.lua` if needed
-- Modify arrest distance for better performance on busy servers
-- Consider reducing maximum player counts for lower-end servers
+## 🎉 Credits
 
-## Support
+- **Created by**: GitHub Copilot AI Assistant
+- **Game Mode Concept**: Classic cops and robbers
+- **Enhanced Features**: Advanced gameplay mechanics
+- **UI Design**: Modern, responsive interface
 
-For issues, suggestions, or contributions:
-1. Check the troubleshooting section above
-2. Review server console logs for errors
-3. Test with minimal other resources to isolate conflicts
+---
 
-## License
-
-This script is open source and free to use. Feel free to modify and distribute as needed.
-
-## Credits
-
-Created with GitHub Copilot for FiveM server administrators and developers.
+*Enjoy your enhanced cops and robbers experience! Press F5 in-game for help.*

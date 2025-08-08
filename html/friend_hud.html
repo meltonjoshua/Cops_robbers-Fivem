@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Friend Mode HUD</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: transparent;
+            overflow: hidden;
+            user-select: none;
+            color: white;
+        }
+
+        /* Quick Score Display */
+        .score-hud {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 15px;
+            border-radius: 10px;
+            border: 2px solid #00ff41;
+            min-width: 200px;
+            box-shadow: 0 4px 20px rgba(0, 255, 65, 0.3);
+        }
+
+        .score-title {
+            text-align: center;
+            font-size: 16px;
+            font-weight: bold;
+            color: #00ff41;
+            margin-bottom: 10px;
+            text-shadow: 0 0 10px #00ff41;
+        }
+
+        .score-item {
+            display: flex;
+            justify-content: space-between;
+            margin: 5px 0;
+            padding: 5px 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        .score-value {
+            color: #ffaa00;
+            font-weight: bold;
+        }
+
+        /* Quick Commands Panel */
+        .commands-hud {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 15px;
+            border-radius: 10px;
+            border: 2px solid #ff6600;
+            box-shadow: 0 4px 20px rgba(255, 102, 0, 0.3);
+        }
+
+        .commands-title {
+            font-size: 14px;
+            font-weight: bold;
+            color: #ff6600;
+            margin-bottom: 8px;
+            text-shadow: 0 0 10px #ff6600;
+        }
+
+        .command-item {
+            margin: 3px 0;
+            font-size: 12px;
+            color: #ffcc00;
+            display: flex;
+            justify-content: space-between;
+            min-width: 160px;
+        }
+
+        .command-key {
+            background: rgba(255, 204, 0, 0.2);
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-weight: bold;
+        }
+
+        /* Game Timer */
+        .game-timer {
+            position: fixed;
+            top: 50px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 32px;
+            font-weight: bold;
+            color: #ffffff;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+            background: rgba(0, 0, 0, 0.6);
+            padding: 10px 20px;
+            border-radius: 25px;
+            border: 2px solid #ffffff;
+            display: none;
+        }
+
+        .timer-warning {
+            color: #ff0000 !important;
+            border-color: #ff0000 !important;
+            animation: pulse 1s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        /* Team Display */
+        .team-display {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 10px 15px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .team-cop {
+            border: 2px solid #0066ff;
+            color: #0066ff;
+            box-shadow: 0 4px 20px rgba(0, 102, 255, 0.3);
+        }
+
+        .team-robber {
+            border: 2px solid #ff3300;
+            color: #ff3300;
+            box-shadow: 0 4px 20px rgba(255, 51, 0, 0.3);
+        }
+
+        /* Chase Intensity Indicator */
+        .chase-indicator {
+            position: fixed;
+            top: 120px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.8);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: bold;
+            display: none;
+        }
+
+        .chase-low {
+            border: 2px solid #ffaa00;
+            color: #ffaa00;
+        }
+
+        .chase-medium {
+            border: 2px solid #ff6600;
+            color: #ff6600;
+        }
+
+        .chase-high {
+            border: 2px solid #ff0000;
+            color: #ff0000;
+            animation: pulse 0.5s infinite;
+        }
+
+        /* Notifications */
+        .notification {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.9);
+            padding: 12px 16px;
+            border-radius: 8px;
+            border-left: 4px solid #00ff41;
+            max-width: 300px;
+            font-size: 14px;
+            opacity: 0;
+            transform: translateX(100%);
+            transition: all 0.3s ease;
+        }
+
+        .notification.show {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .notification.error {
+            border-left-color: #ff0000;
+        }
+
+        .notification.warning {
+            border-left-color: #ffaa00;
+        }
+
+        /* Player List */
+        .player-list {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 10px;
+            border-radius: 8px;
+            border: 2px solid #666666;
+            font-size: 12px;
+            display: none;
+        }
+
+        .player-item {
+            margin: 2px 0;
+            padding: 3px 8px;
+            border-radius: 4px;
+        }
+
+        .player-cop {
+            background: rgba(0, 102, 255, 0.3);
+            color: #66aaff;
+        }
+
+        .player-robber {
+            background: rgba(255, 51, 0, 0.3);
+            color: #ff9966;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .score-hud, .commands-hud {
+                width: 90%;
+                left: 5%;
+                right: 5%;
+            }
+            
+            .commands-hud {
+                bottom: 10px;
+            }
+            
+            .game-timer {
+                font-size: 24px;
+                top: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Score HUD -->
+    <div id="scoreHud" class="score-hud">
+        <div class="score-title">🏆 Your Score</div>
+        <div class="score-item">
+            <span>Arrests:</span>
+            <span class="score-value" id="arrestCount">0</span>
+        </div>
+        <div class="score-item">
+            <span>Escapes:</span>
+            <span class="score-value" id="escapeCount">0</span>
+        </div>
+        <div class="score-item">
+            <span>Money:</span>
+            <span class="score-value" id="moneyCount">$0</span>
+        </div>
+        <div class="score-item">
+            <span>Total:</span>
+            <span class="score-value" id="totalScore">0</span>
+        </div>
+    </div>
+
+    <!-- Quick Commands -->
+    <div id="commandsHud" class="commands-hud">
+        <div class="commands-title">🎮 Quick Commands</div>
+        <div class="command-item">
+            <span class="command-key">Y</span>
+            <span>Taunt</span>
+        </div>
+        <div class="command-item">
+            <span class="command-key">V</span>
+            <span>Quick Car</span>
+        </div>
+        <div class="command-item">
+            <span class="command-key">E</span>
+            <span>Arrest</span>
+        </div>
+        <div class="command-item">
+            <span class="command-key">O</span>
+            <span>Show Score</span>
+        </div>
+        <div class="command-item">
+            <span class="command-key">B</span>
+            <span>Horn Spam</span>
+        </div>
+        <div class="command-item">
+            <span class="command-key">U</span>
+            <span>Unstuck</span>
+        </div>
+    </div>
+
+    <!-- Team Display -->
+    <div id="teamDisplay" class="team-display team-robber">
+        Team: ROBBER
+    </div>
+
+    <!-- Game Timer -->
+    <div id="gameTimer" class="game-timer">
+        05:00
+    </div>
+
+    <!-- Chase Indicator -->
+    <div id="chaseIndicator" class="chase-indicator chase-low">
+        🚗💨 CHASE MODE
+    </div>
+
+    <!-- Notification -->
+    <div id="notification" class="notification">
+        Notification message here
+    </div>
+
+    <!-- Player List -->
+    <div id="playerList" class="player-list">
+        <div style="font-weight: bold; margin-bottom: 5px;">Players Online</div>
+        <div class="player-item player-cop">Officer John</div>
+        <div class="player-item player-robber">Criminal Mike</div>
+    </div>
+
+    <script>
+        let gameData = {
+            score: { arrests: 0, escapes: 0, money: 0 },
+            team: 'robber',
+            gameActive: false,
+            chaseMode: false,
+            timeLeft: 300
+        };
+
+        // Listen for messages from Lua
+        window.addEventListener('message', function(event) {
+            const data = event.data;
+            
+            switch(data.type) {
+                case 'updateScore':
+                    updateScore(data.score);
+                    break;
+                case 'setTeam':
+                    setTeam(data.team);
+                    break;
+                case 'showNotification':
+                    showNotification(data.message, data.type);
+                    break;
+                case 'updateTimer':
+                    updateTimer(data.timeLeft);
+                    break;
+                case 'setChaseMode':
+                    setChaseMode(data.active, data.intensity);
+                    break;
+                case 'showHUD':
+                    toggleHUD(data.show);
+                    break;
+            }
+        });
+
+        function updateScore(score) {
+            gameData.score = score;
+            
+            document.getElementById('arrestCount').textContent = score.arrests || 0;
+            document.getElementById('escapeCount').textContent = score.escapes || 0;
+            document.getElementById('moneyCount').textContent = '$' + (score.money || 0);
+            
+            const total = (score.arrests * 10) + (score.escapes * 5) + Math.floor((score.money || 0) / 1000);
+            document.getElementById('totalScore').textContent = total;
+        }
+
+        function setTeam(team) {
+            gameData.team = team;
+            const teamDisplay = document.getElementById('teamDisplay');
+            
+            teamDisplay.className = 'team-display team-' + team;
+            teamDisplay.textContent = 'Team: ' + team.toUpperCase();
+        }
+
+        function showNotification(message, type = 'info') {
+            const notification = document.getElementById('notification');
+            
+            notification.className = 'notification show ' + type;
+            notification.textContent = message;
+            
+            // Auto-hide after 4 seconds
+            setTimeout(() => {
+                notification.className = 'notification';
+            }, 4000);
+        }
+
+        function updateTimer(timeLeft) {
+            gameData.timeLeft = timeLeft;
+            const timer = document.getElementById('gameTimer');
+            
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            
+            timer.textContent = String(minutes).padStart(2, '0') + ':' + String(seconds).padStart(2, '0');
+            
+            if (timeLeft <= 60) {
+                timer.className = 'game-timer timer-warning';
+            } else {
+                timer.className = 'game-timer';
+            }
+            
+            timer.style.display = gameData.gameActive ? 'block' : 'none';
+        }
+
+        function setChaseMode(active, intensity = 'low') {
+            gameData.chaseMode = active;
+            const indicator = document.getElementById('chaseIndicator');
+            
+            if (active) {
+                indicator.className = 'chase-indicator chase-' + intensity;
+                indicator.style.display = 'block';
+                
+                // Auto-hide after 5 seconds
+                setTimeout(() => {
+                    indicator.style.display = 'none';
+                }, 5000);
+            } else {
+                indicator.style.display = 'none';
+            }
+        }
+
+        function toggleHUD(show) {
+            const elements = ['scoreHud', 'commandsHud', 'teamDisplay'];
+            
+            elements.forEach(id => {
+                const element = document.getElementById(id);
+                element.style.display = show ? 'block' : 'none';
+            });
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            // Show welcome message
+            setTimeout(() => {
+                showNotification('🎮 Friend Mode loaded! Have fun!', 'info');
+            }, 1000);
+        });
+
+        // Handle key presses for debugging
+        document.addEventListener('keydown', function(event) {
+            // Only for testing in browser
+            if (event.key === 'Tab') {
+                event.preventDefault();
+                toggleHUD(document.getElementById('scoreHud').style.display === 'none');
+            }
+        });
+    </script>
+</body>
+</html>

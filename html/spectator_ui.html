@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spectator Mode UI</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: transparent;
+            overflow: hidden;
+            user-select: none;
+        }
+
+        .spectator-container {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            width: 350px;
+            background: rgba(0, 0, 0, 0.85);
+            border: 2px solid #ff6b35;
+            border-radius: 12px;
+            padding: 15px;
+            color: white;
+            font-size: 14px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+            transition: all 0.3s ease;
+            display: none;
+        }
+
+        .spectator-container.visible {
+            display: block;
+            animation: slideIn 0.5s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(-100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .spectator-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(255, 107, 53, 0.3);
+        }
+
+        .spectator-icon {
+            font-size: 24px;
+            color: #ff6b35;
+        }
+
+        .spectator-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #ff6b35;
+        }
+
+        .spectator-mode {
+            background: rgba(255, 107, 53, 0.2);
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 12px;
+            margin-left: auto;
+        }
+
+        .spectator-info {
+            margin-bottom: 15px;
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            padding: 6px 0;
+        }
+
+        .info-label {
+            color: #cccccc;
+            font-weight: 500;
+        }
+
+        .info-value {
+            color: #ff6b35;
+            font-weight: bold;
+            text-align: right;
+            max-width: 180px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .player-counter {
+            background: rgba(76, 175, 80, 0.2);
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+        }
+
+        .spectator-controls {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 12px;
+            margin-top: 10px;
+        }
+
+        .controls-title {
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #ff6b35;
+            text-align: center;
+        }
+
+        .control-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 6px;
+            font-size: 12px;
+        }
+
+        .control-key {
+            background: rgba(255, 107, 53, 0.3);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            min-width: 60px;
+            text-align: center;
+        }
+
+        .control-action {
+            color: #cccccc;
+            text-align: right;
+            flex: 1;
+            margin-left: 10px;
+        }
+
+        .mode-indicator {
+            position: absolute;
+            top: -10px;
+            right: 15px;
+            background: #ff6b35;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: bold;
+            text-transform: uppercase;
+            box-shadow: 0 2px 8px rgba(255, 107, 53, 0.5);
+        }
+
+        .status-indicators {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 10px;
+        }
+
+        .status-indicator {
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .status-live {
+            background: rgba(76, 175, 80, 0.3);
+            color: #4caf50;
+        }
+
+        .status-spectating {
+            background: rgba(255, 193, 7, 0.3);
+            color: #ffc107;
+        }
+
+        .camera-info {
+            background: rgba(33, 150, 243, 0.2);
+            padding: 8px;
+            border-radius: 6px;
+            margin-bottom: 10px;
+            border-left: 3px solid #2196f3;
+        }
+
+        .camera-name {
+            color: #2196f3;
+            font-weight: bold;
+            font-size: 13px;
+        }
+
+        .camera-location {
+            color: #cccccc;
+            font-size: 11px;
+            margin-top: 2px;
+        }
+
+        .hide-button {
+            position: absolute;
+            top: 5px;
+            right: 8px;
+            background: none;
+            border: none;
+            color: #ff6b35;
+            font-size: 16px;
+            cursor: pointer;
+            padding: 5px;
+            border-radius: 4px;
+            transition: background-color 0.2s;
+        }
+
+        .hide-button:hover {
+            background: rgba(255, 107, 53, 0.2);
+        }
+
+        .player-navigation {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin: 10px 0;
+            padding: 8px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 6px;
+        }
+
+        .nav-button {
+            background: rgba(255, 107, 53, 0.3);
+            border: none;
+            color: white;
+            padding: 6px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: background-color 0.2s;
+        }
+
+        .nav-button:hover {
+            background: rgba(255, 107, 53, 0.5);
+        }
+
+        .nav-button:disabled {
+            background: rgba(128, 128, 128, 0.3);
+            cursor: not-allowed;
+        }
+
+        .player-indicator {
+            color: #ff6b35;
+            font-weight: bold;
+            font-size: 13px;
+        }
+
+        /* Minimize/Expand functionality */
+        .spectator-container.minimized {
+            height: 50px;
+            overflow: hidden;
+        }
+
+        .spectator-container.minimized .spectator-info,
+        .spectator-container.minimized .spectator-controls,
+        .spectator-container.minimized .player-navigation {
+            display: none;
+        }
+
+        .minimize-button {
+            position: absolute;
+            top: 5px;
+            right: 30px;
+            background: none;
+            border: none;
+            color: #ff6b35;
+            font-size: 16px;
+            cursor: pointer;
+            padding: 5px;
+            border-radius: 4px;
+            transition: background-color 0.2s;
+        }
+
+        .minimize-button:hover {
+            background: rgba(255, 107, 53, 0.2);
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .spectator-container {
+                width: 300px;
+                font-size: 13px;
+            }
+            
+            .control-row {
+                font-size: 11px;
+            }
+        }
+
+        /* Custom scrollbar for controls */
+        .spectator-controls::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .spectator-controls::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 2px;
+        }
+
+        .spectator-controls::-webkit-scrollbar-thumb {
+            background: rgba(255, 107, 53, 0.5);
+            border-radius: 2px;
+        }
+
+        .spectator-controls::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 107, 53, 0.7);
+        }
+    </style>
+</head>
+<body>
+    <div id="spectatorContainer" class="spectator-container">
+        <div class="mode-indicator" id="modeIndicator">Free Cam</div>
+        
+        <button class="minimize-button" id="minimizeBtn" onclick="toggleMinimize()">−</button>
+        <button class="hide-button" id="hideBtn" onclick="hideSpectatorUI()">×</button>
+        
+        <div class="spectator-header">
+            <span class="spectator-icon">👁️</span>
+            <span class="spectator-title">Spectator Mode</span>
+        </div>
+
+        <div class="status-indicators">
+            <span class="status-indicator status-live">LIVE</span>
+            <span class="status-indicator status-spectating">SPECTATING</span>
+        </div>
+
+        <div class="spectator-info">
+            <div class="info-row">
+                <span class="info-label">Mode:</span>
+                <span class="info-value" id="spectatorMode">Free Camera</span>
+            </div>
+            <div class="info-row" id="targetPlayerRow">
+                <span class="info-label">Target:</span>
+                <span class="info-value" id="targetPlayer">None</span>
+            </div>
+            <div class="info-row" id="playerCountRow">
+                <span class="info-label">Players:</span>
+                <span class="info-value player-counter" id="playerCount">0 active</span>
+            </div>
+            <div class="camera-info" id="cameraInfo" style="display: none;">
+                <div class="camera-name" id="cameraName">Camera Name</div>
+                <div class="camera-location" id="cameraLocation">Camera Location</div>
+            </div>
+        </div>
+
+        <div class="player-navigation" id="playerNavigation" style="display: none;">
+            <button class="nav-button" id="prevPlayer" onclick="switchPlayer('prev')">←</button>
+            <span class="player-indicator" id="playerIndicator">1/1</span>
+            <button class="nav-button" id="nextPlayer" onclick="switchPlayer('next')">→</button>
+        </div>
+
+        <div class="spectator-controls">
+            <div class="controls-title">Controls</div>
+            <div class="control-row">
+                <span class="control-key">TAB</span>
+                <span class="control-action">Switch Mode</span>
+            </div>
+            <div class="control-row" id="playerControls">
+                <span class="control-key">← →</span>
+                <span class="control-action">Switch Player</span>
+            </div>
+            <div class="control-row" id="cameraControls">
+                <span class="control-key">↑ ↓</span>
+                <span class="control-action">Fixed Camera</span>
+            </div>
+            <div class="control-row" id="movementControls">
+                <span class="control-key">WASD</span>
+                <span class="control-action">Free Camera</span>
+            </div>
+            <div class="control-row" id="verticalControls">
+                <span class="control-key">Q E</span>
+                <span class="control-action">Up/Down</span>
+            </div>
+            <div class="control-row" id="speedControls">
+                <span class="control-key">SHIFT</span>
+                <span class="control-action">Fast Mode</span>
+            </div>
+            <div class="control-row">
+                <span class="control-key">H</span>
+                <span class="control-action">Toggle UI</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let spectatorData = {
+            mode: 'free',
+            playerCount: 0,
+            currentPlayer: 0,
+            targetPlayerName: '',
+            cameraName: '',
+            controls: {}
+        };
+
+        let isMinimized = false;
+        let isVisible = true;
+
+        // Listen for NUI messages
+        window.addEventListener('message', function(event) {
+            const data = event.data;
+            
+            switch(data.type) {
+                case 'showSpectatorUI':
+                    showSpectatorUI(data.show, data.data);
+                    break;
+                case 'updateSpectatorUI':
+                    updateSpectatorUI(data.data);
+                    break;
+                case 'toggleSpectatorUI':
+                    toggleSpectatorUI();
+                    break;
+            }
+        });
+
+        function showSpectatorUI(show, data) {
+            const container = document.getElementById('spectatorContainer');
+            
+            if (show && data) {
+                spectatorData = data;
+                updateSpectatorDisplay();
+                container.classList.add('visible');
+                isVisible = true;
+            } else {
+                container.classList.remove('visible');
+                isVisible = false;
+            }
+        }
+
+        function updateSpectatorUI(data) {
+            spectatorData = { ...spectatorData, ...data };
+            updateSpectatorDisplay();
+        }
+
+        function updateSpectatorDisplay() {
+            // Update mode indicator
+            const modeIndicator = document.getElementById('modeIndicator');
+            const spectatorMode = document.getElementById('spectatorMode');
+            
+            let modeText = '';
+            let modeClass = '';
+            
+            switch(spectatorData.mode) {
+                case 'free':
+                    modeText = 'Free Cam';
+                    modeClass = 'free-cam';
+                    break;
+                case 'player':
+                    modeText = 'Player Cam';
+                    modeClass = 'player-cam';
+                    break;
+                case 'fixed':
+                    modeText = 'Fixed Cam';
+                    modeClass = 'fixed-cam';
+                    break;
+            }
+            
+            modeIndicator.textContent = modeText;
+            spectatorMode.textContent = modeText;
+
+            // Update target player
+            const targetPlayer = document.getElementById('targetPlayer');
+            if (spectatorData.targetPlayerName) {
+                targetPlayer.textContent = spectatorData.targetPlayerName;
+                document.getElementById('targetPlayerRow').style.display = '';
+            } else {
+                document.getElementById('targetPlayerRow').style.display = 'none';
+            }
+
+            // Update player count
+            const playerCount = document.getElementById('playerCount');
+            playerCount.textContent = `${spectatorData.playerCount} active`;
+
+            // Update camera info for fixed mode
+            const cameraInfo = document.getElementById('cameraInfo');
+            if (spectatorData.mode === 'fixed' && spectatorData.cameraName) {
+                document.getElementById('cameraName').textContent = spectatorData.cameraName;
+                cameraInfo.style.display = '';
+            } else {
+                cameraInfo.style.display = 'none';
+            }
+
+            // Update player navigation
+            const playerNavigation = document.getElementById('playerNavigation');
+            const playerIndicator = document.getElementById('playerIndicator');
+            
+            if (spectatorData.mode === 'player' && spectatorData.playerCount > 0) {
+                playerNavigation.style.display = '';
+                playerIndicator.textContent = `${spectatorData.currentPlayer}/${spectatorData.playerCount}`;
+                
+                // Enable/disable navigation buttons
+                document.getElementById('prevPlayer').disabled = spectatorData.playerCount <= 1;
+                document.getElementById('nextPlayer').disabled = spectatorData.playerCount <= 1;
+            } else {
+                playerNavigation.style.display = 'none';
+            }
+
+            // Update control visibility based on mode
+            updateControlsVisibility();
+        }
+
+        function updateControlsVisibility() {
+            const mode = spectatorData.mode;
+            
+            // Show/hide controls based on spectator mode
+            document.getElementById('playerControls').style.display = 
+                mode === 'player' ? '' : 'none';
+            document.getElementById('cameraControls').style.display = 
+                mode === 'fixed' ? '' : 'none';
+            document.getElementById('movementControls').style.display = 
+                mode === 'free' ? '' : 'none';
+            document.getElementById('verticalControls').style.display = 
+                mode === 'free' ? '' : 'none';
+            document.getElementById('speedControls').style.display = 
+                mode === 'free' ? '' : 'none';
+        }
+
+        function toggleSpectatorUI() {
+            const container = document.getElementById('spectatorContainer');
+            
+            if (isVisible) {
+                container.style.display = 'none';
+                isVisible = false;
+            } else {
+                container.style.display = 'block';
+                isVisible = true;
+            }
+        }
+
+        function hideSpectatorUI() {
+            toggleSpectatorUI();
+        }
+
+        function toggleMinimize() {
+            const container = document.getElementById('spectatorContainer');
+            const minimizeBtn = document.getElementById('minimizeBtn');
+            
+            isMinimized = !isMinimized;
+            
+            if (isMinimized) {
+                container.classList.add('minimized');
+                minimizeBtn.textContent = '+';
+            } else {
+                container.classList.remove('minimized');
+                minimizeBtn.textContent = '−';
+            }
+        }
+
+        function switchPlayer(direction) {
+            // Send message to client script to switch player
+            if (direction === 'next') {
+                // Trigger next player command
+                fetch(`https://${GetParentResourceName()}/spectator_next_player`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({})
+                });
+            } else if (direction === 'prev') {
+                // Trigger previous player command
+                fetch(`https://${GetParentResourceName()}/spectator_prev_player`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({})
+                });
+            }
+        }
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', function(event) {
+            if (!isVisible) return;
+
+            switch(event.key.toLowerCase()) {
+                case 'h':
+                    if (!event.repeat) {
+                        toggleSpectatorUI();
+                    }
+                    break;
+                case 'm':
+                    if (!event.repeat) {
+                        toggleMinimize();
+                    }
+                    break;
+            }
+        });
+
+        // Initialize UI
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set initial state
+            const container = document.getElementById('spectatorContainer');
+            container.style.display = 'none';
+        });
+
+        // Utility function to get parent resource name
+        function GetParentResourceName() {
+            return window.location.hostname;
+        }
+    </script>
+</body>
+</html>

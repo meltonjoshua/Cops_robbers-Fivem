@@ -1,0 +1,265 @@
+<!-- Statistics Dashboard -->
+<div id="stats-container" class="stats-panel hidden">
+    <div class="stats-header">
+        <h2>Player Statistics</h2>
+        <div class="level-info">
+            <div class="level-badge">
+                <span id="player-level">1</span>
+            </div>
+            <div class="xp-bar">
+                <div class="xp-progress" id="xp-progress"></div>
+                <span class="xp-text" id="xp-text">0 / 100 XP</span>
+            </div>
+        </div>
+        <button id="close-stats" class="close-btn">&times;</button>
+    </div>
+    
+    <div class="stats-content">
+        <div class="stats-grid">
+            <!-- General Stats -->
+            <div class="stat-section">
+                <h3>General Statistics</h3>
+                <div class="stat-grid">
+                    <div class="stat-item">
+                        <span class="stat-value" id="total-games">0</span>
+                        <span class="stat-label">Total Games</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-value" id="games-won">0</span>
+                        <span class="stat-label">Games Won</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-value" id="win-rate">0%</span>
+                        <span class="stat-label">Win Rate</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-value" id="total-playtime">0h</span>
+                        <span class="stat-label">Play Time</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Combat Stats -->
+            <div class="stat-section">
+                <h3>Combat Statistics</h3>
+                <div class="stat-grid">
+                    <div class="stat-item">
+                        <span class="stat-value" id="kill-count">0</span>
+                        <span class="stat-label">Eliminations</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-value" id="death-count">0</span>
+                        <span class="stat-label">Deaths</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-value" id="kdr">0.00</span>
+                        <span class="stat-label">K/D Ratio</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-value" id="arrests-made">0</span>
+                        <span class="stat-label">Arrests Made</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Robbery Stats -->
+            <div class="stat-section">
+                <h3>Criminal Statistics</h3>
+                <div class="stat-grid">
+                    <div class="stat-item">
+                        <span class="stat-value" id="money-stolen">$0</span>
+                        <span class="stat-label">Money Stolen</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-value" id="bank-robberies">0</span>
+                        <span class="stat-label">Banks Robbed</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-value" id="times-arrested">0</span>
+                        <span class="stat-label">Times Arrested</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-value" id="territories-captured">0</span>
+                        <span class="stat-label">Territories</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Special Stats -->
+            <div class="stat-section">
+                <h3>Special Statistics</h3>
+                <div class="stat-grid">
+                    <div class="stat-item">
+                        <span class="stat-value" id="vip-escorts">0</span>
+                        <span class="stat-label">VIP Escorts</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-value" id="best-survival">0m</span>
+                        <span class="stat-label">Best Survival</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-value" id="current-streak">0</span>
+                        <span class="stat-label">Win Streak</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-value" id="achievements-unlocked">0</span>
+                        <span class="stat-label">Achievements</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Achievements Section -->
+        <div class="achievements-section">
+            <h3>Achievements</h3>
+            <div class="achievements-grid" id="achievements-grid">
+                <!-- Achievements will be populated by JavaScript -->
+            </div>
+        </div>
+        
+        <!-- Session Stats -->
+        <div class="session-stats hidden" id="session-summary">
+            <h3>Session Summary</h3>
+            <div class="session-grid">
+                <div class="session-item">
+                    <span class="session-value" id="session-time">0m</span>
+                    <span class="session-label">Session Time</span>
+                </div>
+                <div class="session-item">
+                    <span class="session-value" id="session-arrests">0</span>
+                    <span class="session-label">Arrests</span>
+                </div>
+                <div class="session-item">
+                    <span class="session-value" id="session-money">$0</span>
+                    <span class="session-label">Money</span>
+                </div>
+                <div class="session-item">
+                    <span class="session-value" id="session-kills">0</span>
+                    <span class="session-label">Eliminations</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Hacking Minigame -->
+<div id="hacking-container" class="hacking-panel hidden">
+    <div class="hacking-header">
+        <h2>System Access</h2>
+        <div class="hacking-difficulty">
+            <span>Difficulty: </span>
+            <span id="hack-difficulty">3</span>
+        </div>
+    </div>
+    
+    <div class="hacking-content">
+        <div class="pattern-display">
+            <h3>Follow the Pattern</h3>
+            <div class="pattern-sequence" id="pattern-sequence">
+                <!-- Pattern arrows will be shown here -->
+            </div>
+        </div>
+        
+        <div class="input-display">
+            <h3>Your Input</h3>
+            <div class="input-sequence" id="input-sequence">
+                <!-- Player input will be shown here -->
+            </div>
+        </div>
+        
+        <div class="hacking-controls">
+            <div class="arrow-keys">
+                <div class="arrow-row">
+                    <button class="arrow-btn" data-direction="up">↑</button>
+                </div>
+                <div class="arrow-row">
+                    <button class="arrow-btn" data-direction="left">←</button>
+                    <button class="arrow-btn" data-direction="down">↓</button>
+                    <button class="arrow-btn" data-direction="right">→</button>
+                </div>
+            </div>
+            <div class="hack-progress">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="hack-progress"></div>
+                </div>
+                <span class="progress-text" id="hack-progress-text">0 / 0</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Enhanced Game Info Panel -->
+<div id="enhanced-game-info" class="game-info-panel">
+    <div class="info-section">
+        <h3>Game Mode</h3>
+        <div class="mode-display">
+            <span id="current-mode">Classic</span>
+            <div class="mode-progress">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="mode-progress"></div>
+                </div>
+                <span id="mode-objective">Survive for 10 minutes</span>
+            </div>
+        </div>
+    </div>
+    
+    <div class="info-section">
+        <h3>Team Status</h3>
+        <div class="team-status">
+            <div class="team-info cops">
+                <span class="team-name">Cops</span>
+                <span class="team-count" id="cop-count">0</span>
+            </div>
+            <div class="team-info robbers">
+                <span class="team-name">Robbers</span>
+                <span class="team-count" id="robber-count">0</span>
+            </div>
+        </div>
+    </div>
+    
+    <div class="info-section">
+        <h3>Quick Stats</h3>
+        <div class="quick-stats">
+            <div class="quick-stat">
+                <span class="stat-name">Level</span>
+                <span class="stat-value" id="quick-level">1</span>
+            </div>
+            <div class="quick-stat">
+                <span class="stat-name">XP</span>
+                <span class="stat-value" id="quick-xp">0</span>
+            </div>
+            <div class="quick-stat">
+                <span class="stat-name">Streak</span>
+                <span class="stat-value" id="quick-streak">0</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Level Up Notification -->
+<div id="level-up-notification" class="level-up-notification hidden">
+    <div class="level-up-content">
+        <h2>🎉 LEVEL UP! 🎉</h2>
+        <div class="new-level">
+            <span>Level </span>
+            <span id="new-level-number">2</span>
+        </div>
+        <div class="level-up-rewards">
+            <p>+<span id="level-bonus-xp">20</span> Bonus XP</p>
+            <p>New features unlocked!</p>
+        </div>
+    </div>
+</div>
+
+<!-- Achievement Notification -->
+<div id="achievement-notification" class="achievement-notification hidden">
+    <div class="achievement-content">
+        <div class="achievement-icon">🏆</div>
+        <div class="achievement-text">
+            <h3>Achievement Unlocked!</h3>
+            <div class="achievement-name" id="achievement-name">First Timer</div>
+            <div class="achievement-desc" id="achievement-desc">Play your first game</div>
+            <div class="achievement-xp">+<span id="achievement-xp">100</span> XP</div>
+        </div>
+    </div>
+</div>
