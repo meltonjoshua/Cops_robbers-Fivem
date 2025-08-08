@@ -32,7 +32,8 @@ server_scripts {
     'server/main.lua',
     'server/game.lua',
     'server/version.lua',
-    'server/friend_features.lua'
+    'server/friend_features.lua',
+    'server/test_2players.lua'
 }
 
 files {

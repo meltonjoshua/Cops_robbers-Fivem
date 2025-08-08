@@ -1,9 +1,9 @@
 Config = {}
 
--- Game Settings
-Config.GameDuration = 600 -- 10 minutes in seconds
-Config.MinPlayers = 4 -- Minimum players to start the game
-Config.MaxRobbers = 8 -- Maximum number of robbers
+-- Basic Game Settings
+Config.GameDuration = 300000 -- 5 minutes in milliseconds for friends
+Config.MinPlayers = 2 -- Minimum players to start game (perfect for friends)
+Config.MaxPlayers = 32 -- Maximum players allowed
 Config.ArrestDistance = 3.0 -- Distance to arrest someone
 Config.ArrestTime = 5000 -- Time to arrest in milliseconds
 Config.CharacterSelectionTime = 30 -- Time for character selection in seconds

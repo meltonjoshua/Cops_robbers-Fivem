@@ -123,12 +123,27 @@ AddEventHandler('cr:startQuickGame', function(mode)
     friendGame.startTime = GetGameTimer()
     friendGame.players = players
     
-    -- Auto balance teams for friends
-    local halfPlayers = math.ceil(#players / 2)
+    -- Perfect team balancing for any number of players
+    local playerCount = #players
     
-    for i, playerId in ipairs(players) do
-        local team = i <= halfPlayers and 'cop' or 'robber'
-        TriggerClientEvent('cr:teamSwitched', playerId, team)
+    if playerCount == 2 then
+        -- 1v1 setup - one cop, one robber
+        TriggerClientEvent('cr:teamSwitched', players[1], 'cop')
+        TriggerClientEvent('cr:teamSwitched', players[2], 'robber')
+    elseif playerCount == 3 then
+        -- 1v2 setup - random assignment
+        local teams = {'cop', 'robber', 'robber'}
+        for i, playerId in ipairs(players) do
+            TriggerClientEvent('cr:teamSwitched', playerId, teams[i])
+        end
+    else
+        -- For 4+ players, balance teams normally
+        local halfPlayers = math.ceil(playerCount / 2)
+        
+        for i, playerId in ipairs(players) do
+            local team = i <= halfPlayers and 'cop' or 'robber'
+            TriggerClientEvent('cr:teamSwitched', playerId, team)
+        end
     end
     
     -- Shorter game duration for friends (5 minutes)
@@ -136,6 +151,9 @@ AddEventHandler('cr:startQuickGame', function(mode)
     
     TriggerClientEvent('QBCore:Notify', -1, 'Quick ' .. friendGame.mode .. ' game started! Duration: 5 minutes', 'success')
     TriggerClientEvent('cr:startChaseMode', -1)
+    
+    -- Start the actual game via the main system
+    TriggerEvent('cr:forceStartGame')
     
     -- Auto-end game
     SetTimeout(gameDuration, function()

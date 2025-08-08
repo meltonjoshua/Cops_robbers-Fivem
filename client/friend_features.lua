@@ -96,6 +96,13 @@ end, false)
 
 -- Quick team switch for balancing
 RegisterCommand('switchteam', function()
+    local players = GetActivePlayers()
+    
+    if #players < 2 then
+        ShowNotification("❌ Need at least 2 players for team switching!", "error")
+        return
+    end
+    
     TriggerServerEvent('cr:requestTeamSwitch')
 end, false)
 

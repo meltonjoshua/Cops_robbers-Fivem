@@ -105,8 +105,49 @@ function StartActualGame()
     gameEndTime = GetGameTimer() + (Config.GameDuration * 1000)
     
     local players = GetPlayers()
-    local robberCount = math.min(math.floor(#players / 2), Config.MaxRobbers)
-    local copCount = #players - robberCount
+    
+    -- Special logic for 2 players (1v1)
+    if #players == 2 then
+        local robberCount = 1
+        local copCount = 1
+        
+        -- For 2 players, just assign one as cop and one as robber
+        local player1 = tonumber(players[1])
+        local player2 = tonumber(players[2])
+        
+        -- Check preferences first
+        local player1Pref = playerCharacterData[player1] and playerCharacterData[player1].teamPreference or "random"
+        local player2Pref = playerCharacterData[player2] and playerCharacterData[player2].teamPreference or "random"
+        
+        if player1Pref == "cop" and player2Pref ~= "cop" then
+            cops[player1] = true
+            robbers[player2] = true
+        elseif player2Pref == "cop" and player1Pref ~= "cop" then
+            cops[player2] = true
+            robbers[player1] = true
+        elseif player1Pref == "robber" and player2Pref ~= "robber" then
+            robbers[player1] = true
+            cops[player2] = true
+        elseif player2Pref == "robber" and player1Pref ~= "robber" then
+            robbers[player2] = true
+            cops[player1] = true
+        else
+            -- Random assignment for 2 players
+            if math.random(2) == 1 then
+                cops[player1] = true
+                robbers[player2] = true
+            else
+                cops[player2] = true
+                robbers[player1] = true
+            end
+        end
+        
+        gamePlayers[player1] = true
+        gamePlayers[player2] = true
+    else
+        -- Original logic for 3+ players
+        local robberCount = math.min(math.floor(#players / 2), Config.MaxRobbers)
+        local copCount = #players - robberCount
     
     -- Separate players by team preference
     local copPreferences = {}
@@ -183,7 +224,7 @@ function StartActualGame()
         end
     end
     
-    -- Apply team assignments and characters
+    -- Apply team assignments and characters for 3+ players
     for playerId, _ in pairs(assignedCops) do
         cops[playerId] = true
         gamePlayers[playerId] = {
@@ -207,6 +248,24 @@ function StartActualGame()
         TriggerClientEvent('cr:assignTeam', playerId, 'robber')
         if gamePlayers[playerId].character then
             TriggerClientEvent('cr:applySelectedCharacter', playerId, gamePlayers[playerId].character)
+        end
+    end
+    end -- Close the else block for 3+ players
+    
+    -- Apply character data for 2-player games (already assigned above)
+    if #GetPlayers() == 2 then
+        for playerId, _ in pairs(cops) do
+            if playerCharacterData[playerId] and playerCharacterData[playerId].character then
+                TriggerClientEvent('cr:applySelectedCharacter', playerId, playerCharacterData[playerId].character)
+            end
+            TriggerClientEvent('cr:assignTeam', playerId, 'cop')
+        end
+        
+        for playerId, _ in pairs(robbers) do
+            if playerCharacterData[playerId] and playerCharacterData[playerId].character then
+                TriggerClientEvent('cr:applySelectedCharacter', playerId, playerCharacterData[playerId].character)
+            end
+            TriggerClientEvent('cr:assignTeam', playerId, 'robber')
         end
     end
     
@@ -300,3 +359,23 @@ exports('StartGame', StartGame)
 exports('EndGame', EndGame)
 exports('IsGameActive', function() return gameActive end)
 exports('GetGamePlayers', function() return gamePlayers end)
+
+-- Force start game event for friend features
+RegisterServerEvent('cr:forceStartGame')
+AddEventHandler('cr:forceStartGame', function()
+    -- Skip character selection for quick games
+    local players = GetPlayers()
+    
+    -- Auto-assign characters for quick start
+    for i = 1, #players do
+        local playerId = tonumber(players[i])
+        if playerId then
+            playerCharacterData[playerId] = {
+                character = {model = "mp_m_freemode_01", name = "Quick Character"},
+                teamPreference = "random"
+            }
+        end
+    end
+    
+    StartActualGame()
+end)
