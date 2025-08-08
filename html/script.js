@@ -152,8 +152,55 @@ window.addEventListener('message', function(event) {
         case 'hideCharacterSelection':
             closeCharacterSelection();
             break;
+            
+        case 'showHelp':
+            showHelpOverlay(data.text);
+            break;
     }
 });
+
+function showHelpOverlay(helpText) {
+    // Remove existing help overlay
+    const existingHelp = document.getElementById('helpOverlay');
+    if (existingHelp) {
+        existingHelp.remove();
+    }
+    
+    // Create help overlay
+    const helpOverlay = document.createElement('div');
+    helpOverlay.id = 'helpOverlay';
+    helpOverlay.className = 'help-overlay';
+    
+    const helpContent = document.createElement('div');
+    helpContent.className = 'help-content';
+    
+    const helpTitle = document.createElement('h2');
+    helpTitle.textContent = 'Cops & Robbers - Controls & Keybinds';
+    helpTitle.className = 'help-title';
+    
+    const helpTextElement = document.createElement('pre');
+    helpTextElement.textContent = helpText;
+    helpTextElement.className = 'help-text';
+    
+    const closeButton = document.createElement('button');
+    closeButton.textContent = 'Close (Press F5 again)';
+    closeButton.className = 'help-close-btn';
+    closeButton.onclick = () => helpOverlay.remove();
+    
+    helpContent.appendChild(helpTitle);
+    helpContent.appendChild(helpTextElement);
+    helpContent.appendChild(closeButton);
+    helpOverlay.appendChild(helpContent);
+    
+    document.body.appendChild(helpOverlay);
+    
+    // Auto-close after 10 seconds
+    setTimeout(() => {
+        if (helpOverlay.parentNode) {
+            helpOverlay.remove();
+        }
+    }, 10000);
+}
 
 function openCharacterSelection(characters, availableTeams) {
     // Create iframe for character selection

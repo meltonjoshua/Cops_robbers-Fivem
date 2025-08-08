@@ -74,6 +74,17 @@ Config.Messages = {
     waitingForPlayers = "Waiting for other players to select their characters..."
 }
 
+-- Keybind Settings
+Config.Keybinds = {
+    startGame = "F7",
+    endGame = "F8",
+    gameInfo = "F9",
+    toggleUI = "F6",
+    help = "F5",
+    arrest = "E",
+    enterVehicle = "F"
+}
+
 -- Character Models
 Config.CharacterModels = {
     cops = {

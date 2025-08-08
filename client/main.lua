@@ -252,8 +252,10 @@ RegisterCommand('startcr', function()
 end, false)
 
 -- Chat suggestions
-TriggerEvent('chat:addSuggestion', '/startcopsrobbers', 'Start a new Cops and Robbers game')
+TriggerEvent('chat:addSuggestion', '/startcopsrobbers', 'Start a new Cops and Robbers game (or press ' .. Config.Keybinds.startGame .. ')')
 TriggerEvent('chat:addSuggestion', '/startcr', 'Start a new Cops and Robbers game (short version)')
+TriggerEvent('chat:addSuggestion', '/crhelp', 'Show Cops and Robbers help and keybinds')
+TriggerEvent('chat:addSuggestion', '/togglecrui', 'Toggle the game UI (' .. Config.Keybinds.toggleUI .. ')')
 
 -- NUI Callbacks
 RegisterNUICallback('uiReady', function(data, cb)

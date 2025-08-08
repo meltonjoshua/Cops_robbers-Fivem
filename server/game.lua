@@ -29,6 +29,31 @@ AddEventHandler('cr:characterSelected', function(data)
     HandleCharacterSelection(source, data)
 end)
 
+RegisterNetEvent('cr:requestGameEnd')
+AddEventHandler('cr:requestGameEnd', function()
+    local source = source
+    -- Check if player has permission to end game
+    if source == 0 or IsPlayerAceAllowed(source, "command.admin") then
+        if gameActive then
+            EndGame('admin')
+            if source == 0 then
+                print("Game ended by server console")
+            else
+                print(string.format("Game ended by admin: %s", GetPlayerName(source)))
+                TriggerClientEvent('cr:notify', -1, "Game ended by administrator")
+            end
+        else
+            if source ~= 0 then
+                TriggerClientEvent('cr:notify', source, "No active game to end")
+            else
+                print("No active game to end")
+            end
+        end
+    else
+        TriggerClientEvent('cr:notify', source, "Access denied - admin only")
+    end
+end)
+
 -- Commands
 RegisterCommand('startcr', function(source, args, rawCommand)
     if source == 0 then -- Console command

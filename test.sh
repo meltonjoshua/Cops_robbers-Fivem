@@ -61,6 +61,7 @@ lua_files=(
     "client/blips.lua"
     "client/arrest.lua"
     "client/character_selection.lua"
+    "client/keybinds.lua"
 )
 
 for file in "${lua_files[@]}"; do

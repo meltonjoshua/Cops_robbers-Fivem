@@ -42,6 +42,8 @@ A comprehensive cops and robbers game mode for FiveM featuring:
 - **Timer display**: Countdown timer with color-coded warnings
 - **Objective text**: Dynamic objectives based on team assignment
 - **Control hints**: On-screen controls and key bindings
+- **Keybind system**: Customizable hotkeys for all main commands
+- **Help overlay**: Press F5 for comprehensive help and controls
 
 ## Installation
 
@@ -56,13 +58,21 @@ A comprehensive cops and robbers game mode for FiveM featuring:
 ## Usage
 
 ### Starting a Game
+- **Keybind**: Press `F7` to start a new game
 - **In-game command**: `/startcopsrobbers` or `/startcr`
 - **Console command**: `startcr` (from server console)
 - **Requirements**: Minimum 4 players to start a game
 
 ### Admin Commands
+- **Keybind**: Press `F8` to end the current game (admin only)
 - `/endcr` - End the current game (admin only)
 - `crgameinfo` - Display game information in console (admin/console only)
+
+### Help and Information
+- **Keybind**: Press `F5` to show help overlay with all controls
+- **Keybind**: Press `F6` to toggle the game UI
+- **Keybind**: Press `F9` to show current game status
+- `/crhelp` - Show help in chat
 
 ### Gameplay
 1. Use `/startcopsrobbers` to begin a new game
@@ -74,6 +84,12 @@ A comprehensive cops and robbers game mode for FiveM featuring:
 7. Robbers must survive and avoid arrest for 10 minutes
 
 ### Controls
+- **Main Keybinds**:
+  - **F5** - Show help overlay
+  - **F6** - Toggle game UI
+  - **F7** - Start new game
+  - **F8** - End game (admin only)
+  - **F9** - Show game info/status
 - **During Character Selection**:
   - **Mouse** - Select character and team
   - **Enter** - Confirm selection
@@ -108,6 +124,15 @@ Config.CharacterSelectionTime = 30 -- Character selection time (seconds)
 ### Character Models
 - `Config.CharacterModels.cops` - Available police character models
 - `Config.CharacterModels.robbers` - Available criminal character models
+
+### Keybind Settings
+- `Config.Keybinds.startGame` - Start game keybind (default: F7)
+- `Config.Keybinds.endGame` - End game keybind (default: F8) 
+- `Config.Keybinds.gameInfo` - Game info keybind (default: F9)
+- `Config.Keybinds.toggleUI` - Toggle UI keybind (default: F6)
+- `Config.Keybinds.help` - Help overlay keybind (default: F5)
+- `Config.Keybinds.arrest` - Arrest action key (default: E)
+- `Config.Keybinds.enterVehicle` - Vehicle entry key (default: F)
 
 ### Blip Settings
 - Colors, sprites, and scales for map blips

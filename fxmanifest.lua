@@ -13,7 +13,8 @@ client_scripts {
     'client/main.lua',
     'client/blips.lua',
     'client/arrest.lua',
-    'client/character_selection.lua'
+    'client/character_selection.lua',
+    'client/keybinds.lua'
 }
 
 server_scripts {
