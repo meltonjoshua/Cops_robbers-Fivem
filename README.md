@@ -1,43 +1,184 @@
-# Cops & Robbers FiveM Script - Enhanced Edition v2.0
 
-## 🚓 Overview
-A comprehensive cops and robbers game mode for FiveM featuring multiple game modes, progression system, environmental interactions, advanced arrest mechanics, **immersive audio system**, **realistic vehicle mechanics**, **dynamic map features**, and **spectator mode**.
+# 🚓 Cops & Robbers FiveM - Friend Edition
 
-## ✨ Key Features
+## 🎮 Overview
+A fast, fun, and feature-packed cops vs robbers game mode for FiveM, designed for you and your friends! Enjoy quick rounds, instant action, and friendly competition with easy commands and a modern UI.
 
-### 🎮 Multiple Game Modes
-- **Classic Mode**: Traditional 10-minute survival gameplay
-- **Bank Heist**: Rob banks to collect target money and escape
-- **VIP Escort**: Protect or eliminate a VIP during transport
-- **Territory Control**: Capture and hold zones to win
-- **Survival Mode**: Face waves of increasing difficulty
+---
 
-### 🎵 **NEW: Immersive Audio System**
-- **Dynamic Music**: Chase intensity-based soundtrack
-- **Police Radio Chatter**: Realistic radio communications
-- **Positional Sound Effects**: 3D audio experience
-- **Contextual Ambient Audio**: Different soundscapes per game mode
-- **Volume Controls**: Separate sliders for music, effects, and radio
+## ✨ Features
+- **Quick Game Start**: Play with just 2+ friends, no waiting!
+- **Fast Rounds**: 5-minute games for rapid fun
+- **Auto Team Balancing**: Teams switch and balance automatically
+- **Instant Car Spawning**: Press `V` for a random car, or `/quickcar fast|cop`
+- **Fun Taunts**: Press `Y` to send a taunt to everyone
+- **Enhanced Arrests**: Press `E` for arrest with effects and animations
+- **Chase Effects**: Screen shake and smoke during high-speed pursuits
+- **Score HUD**: See your score live in the top-right
+- **Quick Commands Panel**: Keybinds and commands in-game
+- **Restart Voting**: `/restart` to vote for a new round
+- **Unstuck Command**: Press `U` if you get stuck
+- **Horn Spam**: Press `B` for a fun horn blast
+- **Team Switch**: Press `T` or `/switchteam` to swap sides
 
-### 🚗 **NEW: Advanced Vehicle System**
-- **Fuel Consumption**: Realistic fuel usage based on driving style
-- **Damage Modeling**: Progressive vehicle damage affecting performance
-- **Modification System**: Upgrade speed, handling, and armor
-- **Gas Station Refueling**: Interactive fuel stations with costs
-- **Distance Tracking**: Comprehensive driving statistics
+---
 
-### 🗺️ **NEW: Dynamic Map Features**
-- **Police Roadblocks**: Spawnable roadblocks with AI officers
-- **Weather System**: Dynamic weather affecting visibility and handling
-- **Traffic Control**: Random accidents, construction, and parades
-- **Event Zones**: Live protests and public events
-- **Time Management**: Accelerated or fixed time controls
+## 🏁 Getting Started
+1. **Add to server.cfg**: `ensure Cops_robbers-Fivem`
+2. **Start your server**
+3. **Join with friends** (minimum 2 players)
+4. **Type `/quickstart` in chat** to begin!
 
-### 👁️ **NEW: Spectator Mode**
-- **Multiple Camera Modes**: Free camera, player following, fixed viewpoints
-- **Player Switching**: Navigate between active players with hotkeys
-- **Interactive UI**: Comprehensive spectator interface
-- **Auto-Entry**: Automatic spectator mode when eliminated
+---
+
+## ⌨️ Keybinds & Commands
+| Key/Command      | Action                       |
+|------------------|-----------------------------|
+| Y                | Send taunt message           |
+| V                | Spawn quick vehicle          |
+| E                | Arrest nearby player         |
+| O                | Show current score           |
+| B                | Horn spam (in vehicle)       |
+| U                | Get unstuck                  |
+| T                | Switch teams                 |
+| /quickstart      | Start a quick game           |
+| /quickcar fast   | Spawn a fast car             |
+| /quickcar cop    | Spawn a police car           |
+| /score           | Show your score              |
+| /restart         | Vote to restart game         |
+| /switchteam      | Change your team             |
+
+---
+
+## 🗺️ Game Modes
+- **Classic**: Survive as robbers, arrest as cops
+- **Bank Heist**: Rob banks, escape with the loot
+- **VIP Escort**: Protect or eliminate the VIP
+- **Territory Control**: Capture and hold zones
+- **Survival**: Survive waves of increasing difficulty
+
+Switch modes with `/quickstart [mode]` or press F11 in-game.
+
+---
+
+## 🏆 Scoring System
+- **Arrests**: +10 points
+- **Escapes**: +5 points
+- **Money**: +1 point per $1000
+- **Survival Bonus**: +1 point per minute
+
+See your score live in the HUD or with `/score`.
+
+---
+
+## 🚗 Vehicles
+- **Quick Spawn**: Press `V` or `/quickcar fast|cop|fun`
+- **Modded Cars**: Spawned cars have upgrades for fun
+- **Police Vehicles**: Special cars for cops
+- **Fun Vehicles**: Monster trucks, bikes, and more
+
+---
+
+## � Arrest System
+- **Press `E`** near a player to arrest
+- **Fun animations and effects**
+- **Short jail time** (30 seconds)
+- **Easy escape for friends**
+
+---
+
+## 💬 Taunt System
+- **Press `Y`** to send a random taunt
+- **Taunts appear for all players**
+- **Fun animations included**
+
+---
+
+## 🚨 Chase Effects
+- **Screen shake** at high speed
+- **Smoke and sparks** for intense chases
+- **Chase indicator** in HUD
+
+---
+
+## 🖥️ Friend HUD
+- **Score display** (top-right)
+- **Quick commands panel** (bottom-left)
+- **Team display** (top-left)
+- **Game timer** (center top)
+- **Chase mode indicator**
+- **Notifications** for events
+
+---
+
+## 🛠️ Configuration
+- **config/friend_config.lua**: All friend mode settings
+    - Min players, game time, spawn points, scoring, keybinds, vehicle mods
+- **Easy to tweak** for your group’s preferences
+
+---
+
+## 📝 Example Workflow
+1. **Join server with friends**
+2. **Type `/quickstart classic`**
+3. **Play a 5-minute round**
+4. **Press `O` to check your score**
+5. **Use `/restart` to vote for a new game**
+6. **Switch teams with `/switchteam` or `T`**
+7. **Spawn cars and taunt for fun!**
+
+---
+
+## 🎉 Tips for Maximum Fun
+- Try all game modes for variety
+- Use taunts and horn spam for laughs
+- Switch teams often for balance
+- Play short rounds for quick fun
+- Use quick car spawn for instant action
+- Vote to restart when ready for a rematch
+
+---
+
+## 🤝 Credits
+- **Script by**: GitHub Copilot
+- **Concept**: Cops & Robbers for friends
+- **UI Design**: Modern, responsive HUD
+- **Special Thanks**: All playtesters and contributors
+
+---
+
+## � File Structure
+```
+Cops_robbers-Fivem/
+├── fxmanifest.lua
+├── config/
+│   └── friend_config.lua
+├── client/
+│   └── friend_features.lua
+├── server/
+│   └── friend_features.lua
+├── html/
+│   └── friend_hud.html
+...other files...
+```
+
+---
+
+## 🐛 Troubleshooting
+- **Game won’t start?** Need at least 2 players
+- **Stuck?** Press `U` to get unstuck
+- **No cars?** Use `/quickcar fast` or `/quickcar cop`
+- **Score not updating?** Press `O` or `/score`
+- **Want a rematch?** Use `/restart` to vote
+
+---
+
+## 🏁 Ready to Play?
+Just join with friends, type `/quickstart`, and have fun!
+
+---
+
+**Enjoy the ultimate Cops & Robbers experience for friends!** 🚓💨
 
 ### 📊 Progression System
 - **Player Levels**: Gain XP and level up (1-50)
